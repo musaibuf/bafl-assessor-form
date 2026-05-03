@@ -372,7 +372,7 @@ function App() {
 
     try {
       // 1. Send data to our Node.js backend
-      const response = await fetch('http://localhost:5000/api/submit-results', {
+      const response = await fetch('https://bafl-assessor-form-backend.onrender.com/api/submit-results', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

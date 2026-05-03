@@ -7,11 +7,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Setup Google Sheets API Auth
-const auth = new google.auth.GoogleAuth({
-  keyFile: 'credentials.json', // Your downloaded JSON key
-  scopes:['https://www.googleapis.com/auth/spreadsheets'],
-});
+// Securely load Google Credentials
+let auth;
+if (process.env.GOOGLE_CREDENTIALS) {
+  // If on Render, use the environment variable
+  const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+  auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+} else {
+  // If local, use the file
+  auth = new google.auth.GoogleAuth({
+    keyFile: 'credentials.json',
+    scopes:['https://www.googleapis.com/auth/spreadsheets'],
+  });
+}
 
 app.post('/api/submit-results', async (req, res) => {
   try {
@@ -20,62 +31,22 @@ app.post('/api/submit-results', async (req, res) => {
 
     const timestamp = new Date().toLocaleString();
     
-    // Extract scores for each round (fallback to empty object if not scored)
     const cs = candidate.scores.case_study || {};
     const ds = candidate.scores.design_sprint || {};
     const sc = candidate.scores.solve_conflict || {};
 
-    // Build the single row with all 33 columns
     const rowData =[
-      timestamp,
-      assessorName,
-      candidate.name,
-      candidate.cnic,
-      
-      // --- CASE STUDY (Columns E to I) ---
-      cs.teamwork || '',
-      cs.ownership || '',
-      cs.business_acumen || '',
-      cs.problem_solving || '',
-      cs.comments || '',
-
-      // --- DESIGN SPRINT (Columns J to U) ---
-      ds.teamwork || '',
-      ds.ownership || '',
-      ds.fairness || '',
-      ds.honesty || '',
-      ds.ambition_passion || '',
-      ds.risk_taking || '',
-      ds.commitment_process || '',
-      ds.multi_tasking || '',
-      ds.stakeholder_management || '',
-      ds.business_acumen || '',
-      ds.problem_solving || '',
-      ds.comments || '',
-
-      // --- SOLVE CONFLICT (Columns V to AG) ---
-      sc.teamwork || '',
-      sc.interpersonal_skills || '',
-      sc.inclusivity || '',
-      sc.emotional_intelligence || '',
-      sc.ownership || '',
-      sc.fairness || '',
-      sc.honesty || '',
-      sc.ambition_passion || '',
-      sc.multi_tasking || '',
-      sc.stakeholder_management || '',
-      sc.problem_solving || '',
-      sc.comments || ''
+      timestamp, assessorName, candidate.name, candidate.cnic,
+      cs.teamwork || '', cs.ownership || '', cs.business_acumen || '', cs.problem_solving || '', cs.comments || '',
+      ds.teamwork || '', ds.ownership || '', ds.fairness || '', ds.honesty || '', ds.ambition_passion || '', ds.risk_taking || '', ds.commitment_process || '', ds.multi_tasking || '', ds.stakeholder_management || '', ds.business_acumen || '', ds.problem_solving || '', ds.comments || '',
+      sc.teamwork || '', sc.interpersonal_skills || '', sc.inclusivity || '', sc.emotional_intelligence || '', sc.ownership || '', sc.fairness || '', sc.honesty || '', sc.ambition_passion || '', sc.multi_tasking || '', sc.stakeholder_management || '', sc.problem_solving || '', sc.comments || ''
     ];
 
-    // Append the single row to Google Sheets
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SPREADSHEET_ID,
-      range: 'Sheet1!A:AG', // A to AG covers all 33 columns
+      range: 'Sheet1!A:AG', 
       valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [rowData],
-      },
+      requestBody: { values: [rowData] },
     });
 
     res.status(200).json({ success: true, message: 'Saved to Google Sheets' });
