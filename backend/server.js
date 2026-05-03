@@ -35,7 +35,16 @@ app.post('/api/submit-results', async (req, res) => {
     const { assessorName, candidate } = req.body;
     const sheets = google.sheets({ version: 'v4', auth });
 
-    const timestamp = new Date().toLocaleString();
+    const timestamp = new Date().toLocaleString('en-PK', {
+  timeZone: 'Asia/Karachi',
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: true
+});
     
     const cs = candidate.scores.case_study || {};
     const ds = candidate.scores.design_sprint || {};
