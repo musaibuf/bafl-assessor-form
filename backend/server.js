@@ -9,15 +9,21 @@ app.use(express.json());
 
 // Securely load Google Credentials
 let auth;
+console.log("Checking environment variables...");
+
 if (process.env.GOOGLE_CREDENTIALS) {
-  // If on Render, use the environment variable
-  const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-  auth = new google.auth.GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
+  console.log("✅ GOOGLE_CREDENTIALS found! Using Render environment variables.");
+  try {
+    const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+    auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes:['https://www.googleapis.com/auth/spreadsheets'],
+    });
+  } catch (err) {
+    console.error("❌ Error parsing GOOGLE_CREDENTIALS JSON. Make sure you copied the whole file correctly:", err.message);
+  }
 } else {
-  // If local, use the file
+  console.log("⚠️ GOOGLE_CREDENTIALS is missing! Falling back to local credentials.json file.");
   auth = new google.auth.GoogleAuth({
     keyFile: 'credentials.json',
     scopes:['https://www.googleapis.com/auth/spreadsheets'],
