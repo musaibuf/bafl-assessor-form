@@ -47,19 +47,22 @@ app.post('/api/submit-results', async (req, res) => {
 });
     
     const cs = candidate.scores.case_study || {};
-    const ds = candidate.scores.design_sprint || {};
+    const ec = candidate.scores.design_sprint || {};
     const sc = candidate.scores.solve_conflict || {};
 
-    const rowData =[
+    const rowData = [
       timestamp, assessorName, candidate.name, candidate.cnic,
-      cs.teamwork || '', cs.ownership || '', cs.business_acumen || '', cs.problem_solving || '', cs.comments || '',
-      ds.teamwork || '', ds.ownership || '', ds.fairness || '', ds.honesty || '', ds.ambition_passion || '', ds.risk_taking || '', ds.commitment_process || '', ds.multi_tasking || '', ds.stakeholder_management || '', ds.business_acumen || '', ds.problem_solving || '', ds.comments || '',
-      sc.teamwork || '', sc.interpersonal_skills || '', sc.inclusivity || '', sc.emotional_intelligence || '', sc.ownership || '', sc.fairness || '', sc.honesty || '', sc.ambition_passion || '', sc.multi_tasking || '', sc.stakeholder_management || '', sc.problem_solving || '', sc.comments || ''
+      // Case Study (4 competencies)
+      cs.problem_solving_ability || '', cs.business_acumen || '', cs.teamwork || '', cs.ownership || '', cs.comments || '',
+      // The Experience Center (8 competencies)
+      ec.innovation_creativity || '', ec.resilience_agility || '', ec.teamwork || '', ec.problem_solving_ability || '', ec.commitment_to_process_improvement || '', ec.ownership || '', ec.business_acumen || '', ec.stakeholder_management || '', ec.comments || '',
+      // Solve That Conflict (8 competencies)
+      sc.conduct_integrity || '', sc.emotional_intelligence || '', sc.interpersonal_skills || '', sc.ownership || '', sc.teamwork || '', sc.inclusivity || '', sc.stakeholder_management || '', sc.problem_solving_ability || '', sc.comments || ''
     ];
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SPREADSHEET_ID,
-      range: 'Sheet1!A:AG', 
+      range: 'Sheet1!A:AA',
       valueInputOption: 'USER_ENTERED',
       requestBody: { values: [rowData] },
     });

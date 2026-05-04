@@ -80,20 +80,22 @@ const baflTheme = createTheme({
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
 const activityMatrix = {
-  case_study:["teamwork","ownership","business_acumen","problem_solving"],
-  design_sprint:["teamwork","ownership","fairness","honesty","ambition_passion","risk_taking","commitment_process","multi_tasking","stakeholder_management","business_acumen","problem_solving"],
-  solve_conflict:["teamwork","interpersonal_skills","inclusivity","emotional_intelligence","ownership","fairness","honesty","ambition_passion","multi_tasking","stakeholder_management","problem_solving"]
+  case_study:    ["problem_solving_ability","business_acumen","teamwork","ownership"],
+  design_sprint: ["innovation_creativity","resilience_agility","teamwork","problem_solving_ability","commitment_to_process_improvement","ownership","business_acumen","stakeholder_management"],
+  solve_conflict:["conduct_integrity","emotional_intelligence","interpersonal_skills","ownership","teamwork","inclusivity","stakeholder_management","problem_solving_ability"]
 };
+
 const rounds =[
-  { id:'case_study',    title:'Case Study',           icon:'📋', color:'#CC0000' },
-  { id:'design_sprint', title:'Design Sprint',         icon:'🚀', color:'#0066CC' },
+  { id:'case_study',    title:'Case Study',            icon:'📋', color:'#CC0000' },
+  { id:'design_sprint', title:'The Experience Center', icon:'🚀', color:'#0066CC' },
   { id:'solve_conflict',title:"Solve That Conflict!",  icon:'🤝', color:'#1B8A4E' },
 ];
+
 const clusters =[
-  { id:"collaboration",       title:"Collaboration",         icon:"👥", competencies:[{id:"teamwork",label:"Teamwork"},{id:"interpersonal_skills",label:"Interpersonal Skills"},{id:"inclusivity",label:"Inclusivity"},{id:"emotional_intelligence",label:"Emotional Intelligence"}] },
-  { id:"conduct_integrity",   title:"Conduct & Integrity",   icon:"⚖️", competencies:[{id:"ownership",label:"Ownership"},{id:"fairness",label:"Fairness"},{id:"honesty",label:"Honesty"}] },
-  { id:"creativity_innovation",title:"Creativity & Innovation",icon:"💡",competencies:[{id:"ambition_passion",label:"Ambition & Passion"},{id:"risk_taking",label:"Risk Taking"},{id:"commitment_process",label:"Commitment to Process Improvement"},{id:"multi_tasking",label:"Multi-Tasking"}] },
-  { id:"customer_care",       title:"Customer Care",         icon:"🎯", competencies:[{id:"stakeholder_management",label:"Stakeholder Management"},{id:"business_acumen",label:"Business Acumen"},{id:"problem_solving",label:"Problem Solving Ability"}] }
+  { id:"collaboration",        title:"Collaboration",          icon:"👥", competencies:[{id:"teamwork",label:"Teamwork"},{id:"interpersonal_skills",label:"Interpersonal Skills"},{id:"inclusivity",label:"Inclusivity"},{id:"emotional_intelligence",label:"Emotional Intelligence"}] },
+  { id:"conduct_integrity",    title:"Conduct & Integrity",    icon:"⚖️", competencies:[{id:"conduct_integrity",label:"Conduct & Integrity"},{id:"ownership",label:"Ownership"}] },
+  { id:"creativity_innovation",title:"Creativity & Innovation",icon:"💡", competencies:[{id:"innovation_creativity",label:"Innovation & Creativity"},{id:"resilience_agility",label:"Resilience & Agility"},{id:"commitment_to_process_improvement",label:"Commitment to Process Improvement"}] },
+  { id:"customer_care",        title:"Customer Care",          icon:"🎯", competencies:[{id:"stakeholder_management",label:"Stakeholder Management"},{id:"business_acumen",label:"Business Acumen"},{id:"problem_solving_ability",label:"Problem Solving Ability"}] }
 ];
 
 const scoreLabels = { 1:'Below Expectation', 2:'Meets Basic', 3:'Meets Expectation', 4:'Exceeds Expectation' };
