@@ -101,20 +101,19 @@ const scoreColors = { 1:'#D32F2F', 2:'#F57C00', 3:'#1976D2', 4:'#2E7D32' };
 
 // ─── PDF RESOURCES ───────────────────────────────────────────────────────────
 const pdfResources = [
-  { name: 'Assessor Rubric',                   file: 'BAFL 26 - Assessor Rubric Final.pdf' },
-  { name: 'Case Study 1',                       file: 'BAFL 26 - Case Study 1 Final.pdf' },
-  { name: 'Case Study 1 — Solution Key',        file: 'BAFL 26 - Case Study 1 Solution Key Final.pdf' },
-  { name: 'Case Study 2',                       file: 'BAFL 26 - Case Study 2 Final.pdf' },
-  { name: 'Case Study 2 — Solution Key',        file: 'BAFL 26 - Case Study 2 Solution Key Final.pdf' },
-  { name: 'Case Study 5',                       file: 'BAFL 26 - Case Study 5 Final.pdf' },
-  { name: 'Case Study 5 — Solution Key',        file: 'BAFL 26 - Case Study 5 Solution Key Final.pdf' },
-  { name: 'Case Study 6',                       file: 'BAFL 26 - Case Study 6 Final.pdf' },
-  { name: 'Case Study 6 — Solution Key',        file: 'BAFL 26 - Case Study 6 Solution Key Final.pdf' },
-  { name: 'Experience Center Assessors Guide',  file: 'BAFL 26 - Experience Center Assessors Guide Final.pdf' },
-  { name: 'The Experience Center Brief',        file: 'BAFL 26 - The Experience Center Brief Final.pdf' },
-  { name: 'Solve That Conflict Scenarios',      file: 'BAFL 26 Solve That Conflict Scenarios Final.pdf' },
+  { name: 'Assessor Rubric',                          file: 'BAFL 26 - Assessor Rubric Final.pdf' },
+  { name: 'Case Study 1 — The Untapped Millions',     file: 'BAFL 26 - Case Study 1 - The Untapped Millions.pdf' },
+  { name: 'Case Study 1 — Solution Key',              file: 'BAFL 26 - Case Study 1 Solution Key.pdf' },
+  { name: 'Case Study 2 — The Corridor that Counts',  file: 'BAFL 26 - Case Study 2 - The Corridor that Counts.pdf' },
+  { name: 'Case Study 2 — Solution Key',              file: 'BAFL 26 - Case Study 2 Solution Key.pdf' },
+  { name: 'Case Study 3 — The $12 Billion Question',  file: 'BAFL 26 - Case Study 3- The $12 Billion Question.pdf' },
+  { name: 'Case Study 3 — Solution Key',              file: 'BAFL 26 - Case Study 3 Solution Key.pdf' },
+  { name: 'Case Study 4 — A Letter from Branch 0247', file: 'BAFL 26 - Case Study 4 - A Letter from Branch 0247.pdf' },
+  { name: 'Case Study 4 — Solution Key',              file: 'BAFL 26 - Case Study 4 Solution Key.pdf' },
+  { name: 'Experience Center Assessors Guide',         file: 'BAFL 26 - Experience Center Assessors Guide.pdf' },
+  { name: 'The Experience Center Brief',               file: 'BAFL 26 - The Experience Center Brief.pdf' },
+  { name: 'Solve That Conflict Scenarios',             file: 'BAFL 26 Solve That Conflict Scenarios.pdf' },
 ];
-
 // ─── SCHEMA ─────────────────────────────────────────────────────────────────
 const getRoundSchema = (roundId) => {
   const shape = { comments: z.string().min(10,"Please provide at least a brief comment (min 10 characters)") };
