@@ -5,7 +5,7 @@ import {
   FormHelperText, AppBar, Toolbar, Autocomplete,
   Drawer, List, ListItem, ListItemText, Chip, Accordion,
   AccordionSummary, AccordionDetails, IconButton, Avatar, Divider, LinearProgress, Tooltip,
-  Snackbar, Alert
+  Snackbar, Alert, Collapse
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm, Controller } from 'react-hook-form';
@@ -15,7 +15,8 @@ import Papa from 'papaparse';
 import {
   CheckCircle, ExpandMore, Delete,
   PersonSearch, AccountBalance, AssignmentTurnedIn,
-  Person, Badge, School, LocationOn, KeyboardArrowRight
+  Person, Badge, School, LocationOn, KeyboardArrowRight,
+  PictureAsPdf, FolderOpen, ExpandLess
 } from '@mui/icons-material';
 
 // ─── BANK ALFALAH THEME ─────────────────────────────────────────────────────
@@ -97,6 +98,22 @@ const clusters =[
 
 const scoreLabels = { 1:'Below Expectation', 2:'Meets Basic', 3:'Meets Expectation', 4:'Exceeds Expectation' };
 const scoreColors = { 1:'#D32F2F', 2:'#F57C00', 3:'#1976D2', 4:'#2E7D32' };
+
+// ─── PDF RESOURCES ───────────────────────────────────────────────────────────
+const pdfResources = [
+  { name: 'Assessor Rubric',                   file: 'BAFL 26 - Assessor Rubric Final.pdf' },
+  { name: 'Case Study 1',                       file: 'BAFL 26 - Case Study 1 Final.pdf' },
+  { name: 'Case Study 1 — Solution Key',        file: 'BAFL 26 - Case Study 1 Solution Key Final.pdf' },
+  { name: 'Case Study 2',                       file: 'BAFL 26 - Case Study 2 Final.pdf' },
+  { name: 'Case Study 2 — Solution Key',        file: 'BAFL 26 - Case Study 2 Solution Key Final.pdf' },
+  { name: 'Case Study 5',                       file: 'BAFL 26 - Case Study 5 Final.pdf' },
+  { name: 'Case Study 5 — Solution Key',        file: 'BAFL 26 - Case Study 5 Solution Key Final.pdf' },
+  { name: 'Case Study 6',                       file: 'BAFL 26 - Case Study 6 Final.pdf' },
+  { name: 'Case Study 6 — Solution Key',        file: 'BAFL 26 - Case Study 6 Solution Key Final.pdf' },
+  { name: 'Experience Center Assessors Guide',  file: 'BAFL 26 - Experience Center Assessors Guide Final.pdf' },
+  { name: 'The Experience Center Brief',        file: 'BAFL 26 - The Experience Center Brief Final.pdf' },
+  { name: 'Solve That Conflict Scenarios',      file: 'BAFL 26 Solve That Conflict Scenarios Final.pdf' },
+];
 
 // ─── SCHEMA ─────────────────────────────────────────────────────────────────
 const getRoundSchema = (roundId) => {
@@ -320,6 +337,7 @@ function App() {
   const [pendingCandidate,  setPendingCandidate]  = useState(null);
   const [expandedRound,     setExpandedRound]     = useState(false);
   const [snackbar,          setSnackbar]          = useState({ open: false, message: '', severity: 'success' });
+  const [resourcesOpen,     setResourcesOpen]     = useState(false);
 
   useEffect(() => {
     fetch('/candidates.BAFL.csv')
@@ -542,10 +560,84 @@ function App() {
             })}
           </List>
 
+          {/* ── PDF RESOURCES SECTION ───────────────────────────────────── */}
+          <Box sx={{ borderTop:'1px solid rgba(255,255,255,0.08)' }}>
+            {/* Toggle Header */}
+            <Box
+              onClick={() => setResourcesOpen(prev => !prev)}
+              sx={{
+                display:'flex', alignItems:'center', gap:1.5,
+                px:2.5, py:1.5, cursor:'pointer',
+                '&:hover': { backgroundColor:'rgba(255,255,255,0.04)' },
+                transition:'background 0.18s'
+              }}
+            >
+              <Box sx={{
+                width:28, height:28, borderRadius:1.5,
+                background:'linear-gradient(135deg,#CC0000,#FF4444)',
+                display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0
+              }}>
+                <FolderOpen sx={{ fontSize:15, color:'#fff' }} />
+              </Box>
+              <Typography variant="caption" sx={{
+                color:'rgba(255,255,255,0.7)', fontWeight:700,
+                textTransform:'uppercase', letterSpacing:1.2, fontSize:'0.65rem', flex:1
+              }}>
+                Resources
+              </Typography>
+              {resourcesOpen
+                ? <ExpandLess sx={{ fontSize:16, color:'rgba(255,255,255,0.4)' }} />
+                : <ExpandMore  sx={{ fontSize:16, color:'rgba(255,255,255,0.4)' }} />
+              }
+            </Box>
+
+            {/* Collapsible PDF List */}
+            <Collapse in={resourcesOpen}>
+              <Box sx={{ px:1.5, pb:1.5, maxHeight:260, overflowY:'auto',
+                '&::-webkit-scrollbar': { width:4 },
+                '&::-webkit-scrollbar-track': { background:'transparent' },
+                '&::-webkit-scrollbar-thumb': { background:'rgba(255,255,255,0.12)', borderRadius:2 },
+              }}>
+                {pdfResources.map((pdf, idx) => (
+                  <Box
+                    key={idx}
+                    component="a"
+                    href={`/${pdf.file}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      display:'flex', alignItems:'center', gap:1.5,
+                      px:1.5, py:1, borderRadius:2, mb:0.5,
+                      textDecoration:'none',
+                      border:'1px solid rgba(255,255,255,0.05)',
+                      backgroundColor:'rgba(255,255,255,0.03)',
+                      transition:'all 0.18s',
+                      '&:hover': {
+                        backgroundColor:'rgba(204,0,0,0.15)',
+                        borderColor:'rgba(204,0,0,0.35)',
+                        transform:'translateX(2px)'
+                      }
+                    }}
+                  >
+                    <PictureAsPdf sx={{ fontSize:15, color:'#FF6666', flexShrink:0 }} />
+                    <Typography variant="caption" sx={{
+                      color:'rgba(255,255,255,0.65)', fontSize:'0.72rem',
+                      lineHeight:1.35, fontWeight:500,
+                      overflow:'hidden', display:'-webkit-box',
+                      WebkitLineClamp:2, WebkitBoxOrient:'vertical'
+                    }}>
+                      {pdf.name}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Collapse>
+          </Box>
+
           {/* Sidebar Footer */}
           <Box sx={{ p:2, borderTop:'1px solid rgba(255,255,255,0.06)' }}>
             <Typography variant="caption" sx={{ color:'rgba(255,255,255,0.2)', fontSize:'0.62rem', display:'block', textAlign:'center' }}>
-              Powered by Carnelian Consulting
+              Powered by Carnelian 
             </Typography>
           </Box>
         </Drawer>
