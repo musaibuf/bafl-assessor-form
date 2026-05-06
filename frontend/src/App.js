@@ -114,6 +114,7 @@ const pdfResources = [
   { name: 'Case Study 4 — Solution Key',              file: 'BAFL 26 - Case Study 4 Solution Key.pdf' },
   { name: 'Experience Center Assessors Guide',         file: 'BAFL 26 - Experience Center Assessors Guide.pdf' },
   { name: 'The Experience Center Brief',               file: 'BAFL 26 - The Experience Center Brief.pdf' },
+  { name: 'The Experience Center Brief (Virtual AC)', file: 'BAFL 26 - The Experience Center Brief Virtual AC.pdf' },
   { name: 'Solve That Conflict Scenarios',             file: 'BAFL 26 Solve That Conflict Scenarios.pdf' },
 ];
 // ─── SCHEMA ─────────────────────────────────────────────────────────────────
